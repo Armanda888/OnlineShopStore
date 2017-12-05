@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "ProductData",
+  "description": "A product",
+  "type": "object",
+  "javaType": "com.theBeautiful.model.api.v1.ProductData",
+  "properties": {
+    "id": {
+      "description": "The unique identifier for a product",
+      "type": "string"
+    },
+    "type": {
+      "description": "The unique identifier for a product",
+      "type": "string",
+      "enum": ["products"],
+      "javaEnumValue": "products",
+      "default": "products"
+    },
+    "attributes": {
+      "type": "object",
+      "description": "The unique identifier for a product",
+      "$ref": "productAttributes.json"
+    }
+  },
+  "additionalProperties": false,
+  "required": []
+}

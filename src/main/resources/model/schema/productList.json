@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "ProductList",
+  "description": "A list of product",
+  "type": "object",
+  "javaType": "com.theBeautiful.model.api.v1.ProductList",
+  "properties": {
+    "data": {
+      "type": "array",
+      "description": "The unique identifier for a product",
+      "item": {
+        "$ref": "productData.json"
+      }
+
+    }
+  },
+  "additionalProperties": false
+}

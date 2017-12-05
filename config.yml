@@ -1,0 +1,17 @@
+server:
+  rootPath: '/api/*'
+  applicationConnectors:
+    - type: http
+      port: 8080
+    
+logging:
+# DEBUG, TRACE, or ALL.
+  level: INFO
+# Logger-specific levels.
+  loggers:
+
+    # Sets the level for 'com.example.app' to DEBUG.
+    com.theBeautiful: DEBUG
+
+
+  

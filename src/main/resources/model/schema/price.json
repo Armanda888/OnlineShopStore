@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "Price",
+  "description": "price for the product",
+  "type": "object",
+  "javaType": "com.theBeautiful.model.api.v1.Price",
+  "properties": {
+    "price": {
+      "description": "The unique identifier for a product",
+      "type": "number"
+    },
+    "salePrice": {
+      "description": "The unique identifier for a product",
+      "type": "number"
+    }
+  },
+  "additionalProperties": false
+}

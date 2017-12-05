@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "ProductAttributes",
+  "description": "A product from Acme's catalog",
+  "type": "object",
+  "javaType": "com.theBeautiful.model.api.v1.ProductAttributes",
+  "properties": {
+    "name": {
+      "description": "The unique identifier for a product",
+      "type": "string"
+    },
+    "description": {
+      "description": "The unique identifier for a product",
+      "type": "string"
+    },
+    "category": {
+      "description": "The unique identifier for a product",
+      "type": "string"
+    },
+    "sizes": {
+      "description": "The unique identifier for a product",
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "title": "size"
+      }
+    },
+    "textures": {
+      "description": "The unique identifier for a product",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "title": "texture"
+      }
+    },
+    "prices": {
+      "description": "The unique identifier for a product",
+      "type": "object"
+    },
+    "productImages": {
+      "description": "The unique identifier for a product",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "title": "texture"
+      }
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}
