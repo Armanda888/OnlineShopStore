@@ -1,5 +1,6 @@
 package com.theBeautiful.core.rest;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.theBeautiful.core.mapper.ProductMapper;
@@ -13,6 +14,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Created by jiaoli on 10/10/17
@@ -40,17 +43,39 @@ public class ProductResource implements RestResource{
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getProducts() {
+    public Response getProducts(@QueryParam("category") String category,
+                                @QueryParam("texture") String texture,
+                                @QueryParam("quantity") String quantity) {
         initializeService();
-        List<Product> products = productService.getProducts();
+        List<Product> products = Lists.newArrayList();
+        if (category != null) {
+            products = productService.getByCategory(category);
+        } else {
+            products = productService.getProducts();
+        }
+
+        if (texture != null) {
+            products = products.stream().filter(filterTexture((texture))).collect(Collectors.toList());
+        }
+        if (quantity != null) {
+            products = products.stream().filter(filterQuantity((quantity))).collect(Collectors.toList());
+        }
         return Response.status(Response.Status.OK).entity(productMapper.mapList(products)).build();
+    }
+
+    public static Predicate<Product> filterTexture(String texture) {
+        return product -> product.getTextures() != null && product.getTextures().contains(texture);
+    }
+
+    public static Predicate<Product> filterQuantity(String quantity) {
+        return product -> product.getSizes() != null && product.getSizes().contains(Integer.valueOf(quantity));
     }
 
     @GET
     @Path("/{productId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getProducts(@PathParam("productId") String productId) {
+    public Response getProductById(@PathParam("productId") String productId) {
         initializeService();
         if (productId == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();

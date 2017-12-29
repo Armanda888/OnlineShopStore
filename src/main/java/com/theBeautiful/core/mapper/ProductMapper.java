@@ -25,6 +25,7 @@ public class ProductMapper {
         product.setId(productRest.getData().getId());
         product.setName(attributesRest.getName());
         product.setDescription(attributesRest.getDescription());
+        product.setCategory(attributesRest.getCategory());
         if (attributesRest.getProductImages() != null && !attributesRest.getProductImages().isEmpty()) {
             List<ProductImage> productImageList = Lists.newArrayList();
             for (String image : attributesRest.getProductImages()) {
@@ -53,6 +54,7 @@ public class ProductMapper {
         ProductAttributesRest attributesRest = new ProductAttributesRest();
         attributesRest.setName(domain.getName());
         attributesRest.setDescription(domain.getDescription());
+        attributesRest.setCategory(domain.getCategory());
 
         if (domain.getPrices() != null) {
             PricesRest pricesRest = new PricesRest();
