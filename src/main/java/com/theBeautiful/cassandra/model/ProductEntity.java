@@ -35,6 +35,8 @@ public class ProductEntity implements DBEntityInterface<Product>{
     @Frozen("Map<String, Frozen<PriceType>>")
     private Map<String, PriceType> prices;
 
+    private String priceRule;
+
     @Frozen("List<Frozen<ProductImageType>>")
     private List<ProductImageType> productImages;
 
@@ -91,6 +93,7 @@ public class ProductEntity implements DBEntityInterface<Product>{
             for (Map.Entry<String, PriceType> entry : this.prices.entrySet()) {
                 priceMap.put(entry.getKey(), entry.getValue().generate());
             }
+            product.setPrices(priceMap);
         }
         if (this.productImages != null) {
             List productImagesList = Lists.newArrayList();
@@ -208,5 +211,13 @@ public class ProductEntity implements DBEntityInterface<Product>{
 
     public void setStockNum(Integer stockNum) {
         this.stockNum = stockNum;
+    }
+
+    public String getPriceRule() {
+        return priceRule;
+    }
+
+    public void setPriceRule(String priceRule) {
+        this.priceRule = priceRule;
     }
 }

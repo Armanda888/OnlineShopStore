@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "ProductImage",
+  "description": "A product image",
+  "type": "object",
+  "javaType": "com.theBeautiful.model.api.v1.ProductImage",
+  "properties": {
+    "imageType": {
+      "type": "string",
+      "enum": [
+        "LOCAL",
+        "WEB"
+      ]
+    },
+    "defaultImage": {
+      "description": "The unique identifier for a product",
+      "type": "boolean"
+    },
+    "imageUrl": {
+      "description": "The unique identifier for a product",
+      "type": "string"
+    },
+    "smallImageUrl": {
+      "description": "The unique identifier for a product",
+      "type": "string"
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}

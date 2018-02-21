@@ -1,5 +1,8 @@
 package com.theBeautiful.model;
 
+import com.google.common.collect.Sets;
+
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,15 +16,18 @@ public class Product {
 
     private String category;
 
-    private Set<Integer> sizes;
+    private Set<Integer> sizes = Sets.newHashSet();
 
-    private Set<String> textures;
+    private Set<String> textures = Sets.newHashSet();
 
     private Set<String> colors;
 
     private Boolean onSale;
 
     private Map<String, Price> prices;
+
+    //TODO priceRule is to indicate how the key is going to be constructed of when finding the salePrice and originalPrice.
+    private PriceRule priceRule;
 
     private List<ProductImage> productImages;
 
@@ -136,5 +142,29 @@ public class Product {
 
     public void setStockNum(Integer stockNum) {
         this.stockNum = stockNum;
+    }
+
+    public PriceRule getPriceRule() {
+        return priceRule;
+    }
+
+    public void setPriceRule(PriceRule priceRule) {
+        this.priceRule = priceRule;
+    }
+
+    public void addSizes(Collection<Integer> sizesColllection) {
+        this.sizes.addAll(sizesColllection);
+    }
+
+    public void addTextures(Collection<String> texturesCollection) {
+        this.textures.addAll(texturesCollection);
+    }
+
+    protected enum PriceRule {
+        Style,
+        Size,
+        Type,
+        Style_Size,
+        Type_Size
     }
 }

@@ -1,5 +1,6 @@
 package com.theBeautiful.config;
 
+import com.datastax.driver.core.exceptions.NoHostAvailableException;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.theBeautiful.cassandra.BundleSchema;
@@ -9,6 +10,7 @@ import com.theBeautiful.core.rest.ProductResource;
 import com.theBeautiful.core.rest.RestResource;
 import com.theBeautiful.core.rest.UserResource;
 
+import javax.ws.rs.ProcessingException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,10 +43,14 @@ public class BundleServices {
 
     //TODO to initialize database schema.
     protected void initDBSchema() throws Exception {
-        CassandraConnectorInterface cassandraConnectorInterface = getCassandraInterface();
-        cassandraConnectorInterface.connect();
-        BundleSchema bundleSchema = new BundleSchema();
-        cassandraConnectorInterface.initDBSchema(bundleSchema);
+        try {
+            CassandraConnectorInterface cassandraConnectorInterface = getCassandraInterface();
+            cassandraConnectorInterface.connect();
+            BundleSchema bundleSchema = new BundleSchema();
+            cassandraConnectorInterface.initDBSchema(bundleSchema);
+        } catch (NoHostAvailableException e) {
+            throw new ProcessingException("Cassandra is down.");
+        }
     }
 
     public static CassandraConnectorInterface getCassandraInterface() {

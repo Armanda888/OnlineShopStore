@@ -41,14 +41,15 @@ CREATE TABLE IF NOT EXISTS bundles.User (
         compression={'sstable_compression': 'LZ4Compressor'};
 
 CREATE TYPE IF NOT EXISTS bundles.Price_Type (
-    price         float,
-    salePrice     float,
+    originPrice         double,
+    salePrice           double
 );
 
 CREATE TYPE IF NOT EXISTS bundles.Product_Image_Type (
     id              text,
     description     text,
     productImage    text,
+    smallImageUrl      text,
     defaultImage    boolean,
     imageType       text,
     imageUrl        text,
@@ -67,6 +68,7 @@ CREATE TABLE IF NOT EXISTS bundles.Product (
     saleNum       int,
     stockNum      int,
     prices        map<text, frozen<Price_Type>>,
+    priceRule     text,
     productImages   list<frozen<Product_Image_Type>>,
     reviews       map<text, text>,
     PRIMARY KEY (id)

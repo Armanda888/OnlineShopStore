@@ -25,6 +25,7 @@
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
             <version>${dropwizard.version}</version>
+
         </dependency>
         <dependency>
             <groupId>io.dropwizard</groupId>
@@ -106,6 +107,11 @@
             <groupId>io.federecio</groupId>
             <artifactId>dropwizard-swagger</artifactId>
             <version>0.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.6</version>
         </dependency>
 
     </dependencies>

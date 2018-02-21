@@ -7,8 +7,4 @@ public interface RestResource {
     String getBaseUrl();
 
     String getName();
-
-    default boolean automaticRegister() {
-        return true;
-    }
 }

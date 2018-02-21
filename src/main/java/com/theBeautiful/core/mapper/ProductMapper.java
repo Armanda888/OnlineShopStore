@@ -2,6 +2,7 @@ package com.theBeautiful.core.mapper;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.primitives.Floats;
 import com.theBeautiful.cassandra.dao.ProductDao;
 import com.theBeautiful.core.rest.ProductResource;
 import com.theBeautiful.model.Price;
@@ -9,6 +10,8 @@ import com.theBeautiful.model.Product;
 import com.theBeautiful.model.ProductImage;
 import com.theBeautiful.model.api.v1.*;
 
+import java.text.DecimalFormat;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,26 +29,39 @@ public class ProductMapper {
         product.setName(attributesRest.getName());
         product.setDescription(attributesRest.getDescription());
         product.setCategory(attributesRest.getCategory());
+        if (attributesRest.getSizes() != null && !attributesRest.getSizes().isEmpty()) {
+            product.addSizes(attributesRest.getSizes());
+        }
+        if (attributesRest.getTextures() != null && !attributesRest.getTextures().isEmpty()) {
+            product.addTextures(attributesRest.getTextures());
+        }
         if (attributesRest.getProductImages() != null && !attributesRest.getProductImages().isEmpty()) {
             List<ProductImage> productImageList = Lists.newArrayList();
-            for (String image : attributesRest.getProductImages()) {
+            for (ProductImageRest imageRest : attributesRest.getProductImages()) {
                 ProductImage productImage = new ProductImage();
-                productImage.setImageUrl(image);
+                productImage.setImageUrl(imageRest.getImageUrl());
+                productImage.setSmallImageUrl(imageRest.getSmallImageUrl());
+                if (imageRest.getImageType() != null) {
+                    productImage.setImageType(ProductImage.ImageType.valueOf(imageRest.getImageType().name()));
+                }
+
                 productImageList.add(productImage);
             }
             product.setProductImages(productImageList);
         }
-        if (attributesRest.getPrices() != null) {
+
+        if (attributesRest.getPrices() != null && attributesRest.getPrices().getAdditionalProperties() != null) {
             Map<String, Price> prices = Maps.newHashMap();
             for (Map.Entry<String, Object> entry : attributesRest.getPrices().getAdditionalProperties().entrySet()) {
                 Price price = new Price();
-                PriceRest priceRest = (PriceRest) entry.getValue();
-                price.setPrice(priceRest.getPrice().floatValue());
-                price.setSalePrice(priceRest.getSalePrice().floatValue());
+                LinkedHashMap priceList = (LinkedHashMap) entry.getValue();
+                price.setPrice(Double.valueOf(priceList.get("originPrice").toString()));
+                price.setSalePrice(Double.valueOf(priceList.get("salePrice").toString()));
                 prices.put(entry.getKey(), price);
             }
             product.setPrices(prices);
         }
+
 
         return product;
     }
@@ -60,18 +76,31 @@ public class ProductMapper {
             PricesRest pricesRest = new PricesRest();
             for (Map.Entry<String, Price> entry : domain.getPrices().entrySet()) {
                 PriceRest priceRest = new PriceRest();
-                priceRest.setPrice((double) entry.getValue().getPrice());
-                priceRest.setSalePrice((double) entry.getValue().getSalePrice());
+                priceRest.setOriginPrice(entry.getValue().getPrice());
+                priceRest.setSalePrice(entry.getValue().getSalePrice());
                 pricesRest.setAdditionalProperty(entry.getKey(), priceRest);
             }
             attributesRest.setPrices(pricesRest);
         }
+
         if (domain.getProductImages() != null) {
-            List<String> images = Lists.newArrayList();
+            List<ProductImageRest> imageRestList = Lists.newArrayList();
             for (ProductImage image : domain.getProductImages()) {
-                images.add(image.getImageUrl());
+                ProductImageRest imageRest = new ProductImageRest();
+                imageRest.setImageUrl(image.getImageUrl());
+                imageRest.setSmallImageUrl(image.getSmallImageUrl());
+                if (image.getImageType() != null) {
+                    imageRest.setImageType(ProductImageRest.ImageType.valueOf(image.getImageType().name()));
+                }
+                imageRestList.add(imageRest);
             }
-            attributesRest.setProductImages(images);
+            attributesRest.setProductImages(imageRestList);
+        }
+        if (domain.getSizes() != null && !domain.getSizes().isEmpty()) {
+            attributesRest.setSizes(Lists.newArrayList(domain.getSizes()));
+        }
+        if (domain.getTextures() != null && !domain.getTextures().isEmpty()) {
+            attributesRest.setTextures(Lists.newArrayList(domain.getTextures()));
         }
         ProductDataRest productDataRest = new ProductDataRest();
         productDataRest.setAttributes(attributesRest);

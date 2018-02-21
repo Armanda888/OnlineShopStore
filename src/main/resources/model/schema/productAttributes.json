@@ -34,16 +34,23 @@
       }
     },
     "prices": {
-      "description": "The unique identifier for a product",
-      "type": "object"
+      "type": "object",
+      "additionalProperties": true
     },
     "productImages": {
       "description": "The unique identifier for a product",
       "type": "array",
       "items": {
-        "type": "string",
-        "title": "texture"
+        "type": "object",
+        "$ref": "productImage.json"
       }
+    },
+    "imageType": {
+      "type": "string",
+      "enum": [
+        "LOCAL",
+        "WEB"
+      ]
     }
   },
   "required": [],

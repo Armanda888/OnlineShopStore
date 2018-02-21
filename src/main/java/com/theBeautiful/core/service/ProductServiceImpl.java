@@ -27,7 +27,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public String addProduct(Product product) {
-        product.setId(JiamiString.generateId());
+        if (product.getId() == null) {
+            product.setId(JiamiString.generateId());
+        }
         if (product != null) {
             this.productDao.upsertProduct(product);
         }

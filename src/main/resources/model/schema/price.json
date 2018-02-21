@@ -5,13 +5,15 @@
   "type": "object",
   "javaType": "com.theBeautiful.model.api.v1.Price",
   "properties": {
-    "price": {
+    "originPrice": {
       "description": "The unique identifier for a product",
-      "type": "number"
+      "type": "number",
+      "multipleOf": 0.01
     },
     "salePrice": {
       "description": "The unique identifier for a product",
-      "type": "number"
+      "type": "number",
+      "multipleOf": 0.01
     }
   },
   "additionalProperties": false

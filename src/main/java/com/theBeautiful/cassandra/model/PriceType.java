@@ -11,37 +11,41 @@ import com.theBeautiful.model.Price;
 @UDT(keyspace = "bundles", name = "Price_Type")
 public class PriceType {
 
-    @Field(name = "price")
-    private float price;
+    /*original price*/
+    @Field(name = "originPrice")
+    private Double originPrice;
 
     @Field(name = "salePrice")
-    private float salePrice;
+    private Double salePrice;
+
+    public PriceType() {
+    }
 
     public PriceType(Price priceObj) {
-        this.price = priceObj.getPrice();
+        this.originPrice = priceObj.getPrice();
         this.salePrice = priceObj.getSalePrice();
     }
 
     public Price generate() {
         Price priceObj = new Price();
-        priceObj.setPrice(this.price);
+        priceObj.setPrice(this.originPrice);
         priceObj.setSalePrice(this.salePrice);
         return priceObj;
     }
 
-    public float getPrice() {
-        return price;
+    public Double getOriginPrice() {
+        return originPrice;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setOriginPrice(Double originPrice) {
+        this.originPrice = originPrice;
     }
 
-    public float getSalePrice() {
+    public Double getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(float salePrice) {
+    public void setSalePrice(Double salePrice) {
         this.salePrice = salePrice;
     }
 }

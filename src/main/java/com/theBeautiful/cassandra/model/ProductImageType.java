@@ -25,6 +25,9 @@ public class ProductImageType {
     @Field(name = "imageType")
     private String imageType;
 
+    @Field(name = "smallImageUrl")
+    private String smallImageUrl;
+
     @Field(name = "imageUrl")
     private String imageUrl;
 
@@ -49,6 +52,9 @@ public class ProductImageType {
         if (productImage.getImageUrl() != null) {
             this.imageUrl = productImage.getImageUrl();
         }
+        if (productImage.getSmallImageUrl() != null) {
+            this.smallImageUrl = productImage.getSmallImageUrl();
+        }
         this.imageCrop = productImage.getImageCrop();
     }
 
@@ -61,6 +67,7 @@ public class ProductImageType {
         productImage.setImageType(ProductImage.ImageType.valueOf(this.imageType));
         productImage.setImageUrl(this.imageUrl);
         productImage.setImageCrop(this.imageCrop);
+        productImage.setSmallImageUrl(this.smallImageUrl);
         return productImage;
     }
 
@@ -118,5 +125,13 @@ public class ProductImageType {
 
     public void setImageCrop(Boolean imageCrop) {
         this.imageCrop = imageCrop;
+    }
+
+    public String getSmallImageUrl() {
+        return smallImageUrl;
+    }
+
+    public void setSmallImageUrl(String smallImageUrl) {
+        this.smallImageUrl = smallImageUrl;
     }
 }

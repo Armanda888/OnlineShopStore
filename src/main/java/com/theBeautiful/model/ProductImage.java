@@ -11,6 +11,7 @@ public class ProductImage {
 
     private String productImage;
 
+
     /* whether this image the default image */
     private Boolean defaultImage;
 
@@ -19,6 +20,8 @@ public class ProductImage {
 
     /*location to get the image*/
     private String imageUrl;
+
+    private String smallImageUrl;
 
     /*if the image is cropped or not*/
     private Boolean imageCrop;
@@ -77,6 +80,14 @@ public class ProductImage {
 
     public void setImageCrop(Boolean imageCrop) {
         this.imageCrop = imageCrop;
+    }
+
+    public String getSmallImageUrl() {
+        return smallImageUrl;
+    }
+
+    public void setSmallImageUrl(String smallImageUrl) {
+        this.smallImageUrl = smallImageUrl;
     }
 
     public enum ImageType {
